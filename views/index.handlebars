@@ -1,0 +1,28 @@
+<h2>Welcome to Mystery Word Game</h2>
+{{word}}
+{{#unless newGame}}
+<form class="" action="/userName" method="post">
+  <input type="text" name="newGame" value="">
+  <input type="submit" value="Enter Name">
+</form>
+ {{else}}
+
+ <h2>Welcome {{newGame}}</h2>
+
+ {{/unless}}
+
+<span>You have {{remaining}} guesses left</span>
+
+
+<form class="" action="/" method="post">
+  <input type="text" name="guess" value="" placeholder="Guess a letter">
+  <input type="submit" value="Make Guess">
+</form>
+
+
+
+
+<p>{{blanks}}</p>
+
+<p>Guessed letters</p>
+<p>{{guesses}}</p>
