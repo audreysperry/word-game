@@ -1,4 +1,6 @@
 <h2>Welcome to Mystery Word Game</h2>
+
+
 {{word}}
 {{#unless newGame}}
 <form class="" action="/userName" method="post">
@@ -13,8 +15,15 @@
 
 <span>You have {{remaining}} guesses left</span>
 
+{{#each errors}}
+<div style="color: red;">
+  {{msg}}
+</div>
+{{error}}
+{{/each}}
 
-<form class="" action="/" method="post">
+{{error}}
+<form class="" action="/guesses" method="post">
   <input type="text" name="guess" value="" placeholder="Guess a letter">
   <input type="submit" value="Make Guess">
 </form>
