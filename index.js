@@ -32,18 +32,24 @@ app.use((req, res, next) => {
   if (req.session.word) {
     return next();
 
+  // } else if (!req.session.level) {
+  //   return next();
+
   } else {
+    req.session.word = words[Math.floor(Math.random() * words.length)];
+    console.log(req.session.word);
     req.session.guesses = [];
     req.session.guessLeft = 8;
-    req.session.word = words[Math.floor(Math.random() * words.length)];
-    word = req.session.word;
+    let word = req.session.word;
+    console.log(word);
     req.session.letters = word.split('');
     letters = req.session.letters;
     req.session.blanks = Array(letters.length).fill('_');
 
   }
-  next();
+  return next();
 });
+
 
 // pull list of words from file on comp
 const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toUpperCase().split("\n");
@@ -51,7 +57,7 @@ const easyWords =[];
 const mediumWords = [];
 const hardWords = [];
 
-
+// create three different arrays of words of various word length
 words.filter(function(word) {
   if (word.length <= 6 && word.length >= 4) {
     return easyWords.push(word);
@@ -68,9 +74,9 @@ app.get('/', (req, res) => {
     blanks: req.session.blanks.join(' '),
     remaining: req.session.guessLeft,
     userName: req.session.userName,
-    guesses: req.session.guesses
+    guesses: req.session.guesses,
+    level: req.session.level
   });
-  console.log(word);
 });
 
 // allow user to add name and show their name at top of screen
@@ -82,7 +88,6 @@ app.post('/userName', (req, res) => {
 //allow user to pick a difficulty level
 app.post('/level', (req, res) => {
   req.session.level = req.body.level;
-  selectWord(req, res);
   res.redirect('/');
 });
 
@@ -97,6 +102,7 @@ app.post('/guesses', (req, res) => {
   let errors = req.validationErrors();
   if (errors) {
     res.render('index', {
+      level: req.session.level,
       errors: errors,
       guesses: req.session.guesses,
       blanks: req.session.blanks.join(' '),
@@ -108,6 +114,7 @@ app.post('/guesses', (req, res) => {
   } else if (req.session.guesses.includes(req.body.guess)) {
     error = "You've guessed this letter already";
     res.render('index', {
+      level: req.session.level,
       blanks: req.session.blanks.join(' '),
       remaining: req.session.guessLeft,
       userName: req.session.userName,
@@ -145,7 +152,7 @@ app.post('/restart', (req, res) => {
   req.session.letters = word.split('');
   letters = req.session.letters;
   req.session.blanks = Array(letters.length).fill('_');
-
+  console.log(word);
   res.redirect('/');
 });
 
@@ -176,10 +183,21 @@ function winOrLose(res, req) {
   }
 }
 
-function selectWord() {
-  if (req.session.level === "easy") {
-
-  }
-}
+//select random word based on level selected.
+// function selectWord(req) {
+//   console.log(req.session.level);
+//   if (req.session.level === "easy") {
+//     let word = easyWords[Math.floor(Math.random() * words.length)];
+//     return word;
+//   } else if (req.session.level === "medium") {
+//     let word = mediumWords[Math.floor(Math.random() * words.length)];
+//     return word;
+//   } else if (req.session.level === "hard") {
+//       let word = hardWords[Math.floor(Math.random() * words.length)];
+//       return word;
+//   } else {
+//     return;
+//   }
+// }
 
 app.listen(3000);

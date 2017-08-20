@@ -18,6 +18,8 @@
   {{/unless}}
 
 
+
+
   <div class="inner">
     <span class="guesses">Guesses remaining: {{remaining}}</span>
 
@@ -30,9 +32,30 @@
 
     <div class="error">{{error}}</div>
 
+    <!-- {{#unless level}}
+      <div class="level-form">
+        <span>Choose a difficulty level</span>
+        <form class="difficulty" action="/level" method="post">
+          <label for="level">Level:</label>
+            <select name="level" id="level">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+      </div>
 
-    <h1>{{blanks}}</h1>
 
+    {{else}}
+        <h1>Difficulty level: {{level}}</h1>
+
+
+    {{/unless}} -->
+
+
+
+  <h1>{{blanks}}</h1>
 
     <form class="guess-letter" action="/guesses" method="post">
       <input type="text" name="guess" value="" placeholder="Guess a letter">
