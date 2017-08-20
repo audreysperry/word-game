@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(expressValidator());
+app.use('/static', express.static('public'));
 
 // create new game if word is not defined in session
 app.use((req, res, next) => {
@@ -46,6 +47,20 @@ app.use((req, res, next) => {
 
 // pull list of words from file on comp
 const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toUpperCase().split("\n");
+const easyWords =[];
+const mediumWords = [];
+const hardWords = [];
+
+
+words.filter(function(word) {
+  if (word.length <= 6 && word.length >= 4) {
+    return easyWords.push(word);
+  } else if (word.length === 7) {
+    return mediumWords.push(word);
+  } else if (word.length >= 8) {
+    return hardWords.push(word);
+  }
+});
 
 // render the main page with info about game
 app.get('/', (req, res) => {
@@ -53,14 +68,21 @@ app.get('/', (req, res) => {
     blanks: req.session.blanks.join(' '),
     remaining: req.session.guessLeft,
     userName: req.session.userName,
-    word: req.session.word,
     guesses: req.session.guesses
   });
+  console.log(word);
 });
 
 // allow user to add name and show their name at top of screen
 app.post('/userName', (req, res) => {
   req.session.userName = req.body.userName;
+  res.redirect('/');
+});
+
+//allow user to pick a difficulty level
+app.post('/level', (req, res) => {
+  req.session.level = req.body.level;
+  selectWord(req, res);
   res.redirect('/');
 });
 
@@ -151,6 +173,12 @@ function winOrLose(res, req) {
     });
   } else {
     res.redirect('/');
+  }
+}
+
+function selectWord() {
+  if (req.session.level === "easy") {
+
   }
 }
 

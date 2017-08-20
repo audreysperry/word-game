@@ -1,0 +1,46 @@
+
+
+.wrapper {
+  padding: 200px;
+  margin: 0 auto;
+  font-family: "helvetica";
+  background-color: #eee;
+
+}
+
+
+.welcome {
+  text-align: center;
+  font-size: 40px;
+
+}
+
+.enter-name {
+  margin-right: 15px;
+}
+
+
+.name-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.welcome-name {
+  text-align: center;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.error {
+  color: magenta;
+  font-weight: bold;
+  margin-top: 10px;
+}

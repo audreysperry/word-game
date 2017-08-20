@@ -1,37 +1,47 @@
-<h2>Welcome to Mystery Word Game</h2>
+<div class="wrapper">
+  <h2 class="welcome">Mystery Word Game</h2>
 
 
-{{word}}
-{{#unless userName}}
-<form class="" action="/userName" method="post">
-  <input type="text" name="userName" value="">
-  <input type="submit" value="Enter Name">
-</form>
- {{else}}
+  {{#unless userName}}
+    <div class="name-form">
+      <span class="enter-name">Enter your name to get started</span>
+      <form class="enter-name" action="/userName" method="post">
+        <input type="text" name="userName" value="">
+        <input type="submit" value="Enter Name">
+      </form>
+    </div>
 
- <h2>Welcome {{userName}}</h2>
+    {{else}}
 
- {{/unless}}
+      <h2 class="welcome-name">Welcome {{userName}}</h2>
 
-<span>You have {{remaining}} guesses left</span>
+  {{/unless}}
 
-{{#each errors}}
-<div style="color: red;">
-  {{msg}}
+
+  <div class="inner">
+    <span class="guesses">Guesses remaining: {{remaining}}</span>
+
+    {{#each errors}}
+      <div class="error">
+        {{msg}}
+      </div>
+      {{error}}
+    {{/each}}
+
+    <div class="error">{{error}}</div>
+
+
+    <h1>{{blanks}}</h1>
+
+
+    <form class="guess-letter" action="/guesses" method="post">
+      <input type="text" name="guess" value="" placeholder="Guess a letter">
+      <input type="submit" value="Make Guess">
+    </form>
+
+    <div class="guesses">
+      <p>You've guessed these letters: </p>
+      <p>{{guesses}}</p>
+    </div>
+  </div>
 </div>
-{{error}}
-{{/each}}
-
-<div>{{error}}</div>
-<form class="" action="/guesses" method="post">
-  <input type="text" name="guess" value="" placeholder="Guess a letter">
-  <input type="submit" value="Make Guess">
-</form>
-
-
-
-
-<p>{{blanks}}</p>
-
-<p>Guessed letters</p>
-<p>{{guesses}}</p>

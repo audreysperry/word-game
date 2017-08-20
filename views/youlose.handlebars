@@ -1,6 +1,8 @@
-<h2>Sorry {{userName}} but you lost this time. Would you like to play again? </h2>
+<div class="wrapper">
+  <h2>Sorry {{userName}} but you lost this time. Would you like to play again? </h2>
 
-<p>The word you were looking for was{{word}}</p>
-<form class="" action="/restart" method="post">
-  <input type="submit" name="restart" value="New Game">
-</form>
+  <p>The word you were looking for was {{word}}</p>
+  <form class="" action="/restart" method="post">
+    <input type="submit" name="restart" value="New Game">
+  </form>
+</div>
